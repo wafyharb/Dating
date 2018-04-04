@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<title>CSS3 Contact Form</title>
+<link href="/style.css" rel="stylesheet" type="text/css" media="screen" />
+<style>
+@charset "UTF-8";
+
+body, div, h1, form, fieldset, input, textarea {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: none;
+}
+
+html {
+	height: 100%;
+}
+
+body {
+	background: #728eaa;
+	font-family: sans-serif;
+}
+
+#contact {
+	width: 430px;
+	margin: 60px auto;
+	padding: 60px 30px;
+	background: #c9d0de;
+	border: 1px solid #e1e1e1;
+}
+
+h1 {
+	font-size: 35px;
+	color: #445668;
+	text-transform: uppercase;
+	text-align: center;
+	margin: 0 0 35px 0;
+	text-shadow: 0px 1px 0px #f2f2f2;
+}
+
+label {
+	float: left;
+	clear: left;
+	margin: 11px 20px 0 0;
+	width: 95px;
+	text-align: right;
+	font-size: 16px;
+	color: #445668;
+	text-transform: uppercase;
+	text-shadow: 0px 1px 0px #f2f2f2;
+}
+
+input {
+	width: 260px;
+	height: 35px;
+	padding: 5px 20px 0px 20px;
+	margin: 0 0 20px 0;
+	background: #5E768D;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	font-family: sans-serif;
+	font-size: 16px;
+	color: #f2f2f2;
+	text-transform: uppercase;
+	text-shadow: 0px -1px 0px #334f71;
+}
+
+input::-webkit-input-placeholder {
+	color: #a1b2c3;
+	text-shadow: 0px -1px 0px #38506b;
+}
+
+input:-moz-placeholder {
+	color: #a1b2c3;
+	text-shadow: 0px -1px 0px #38506b;
+}
+
+textarea {
+	width: 260px;
+	height: 170px;
+	padding: 12px 20px 0px 20px;
+	margin: 0 0 20px 0;
+	background: #5E768D;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	font-family: sans-serif;
+	font-size: 16px;
+	color: #f2f2f2;
+	text-transform: uppercase;
+	text-shadow: 0px -1px 0px #334f71;
+}
+
+textarea::-webkit-input-placeholder {
+	color: #a1b2c3;
+	text-shadow: 0px -1px 0px #38506b;
+}
+
+textarea:-moz-placeholder {
+	color: #a1b2c3;
+	text-shadow: 0px -1px 0px #38506b;
+}
+
+input:focus, textarea:focus {
+	background: #728eaa;
+}
+
+input[type=submit] {
+	width: 185px;
+	height: 52px;
+	float: right;
+	padding: 10px 15px;
+	margin: 0 15px 0 0;
+	-moz-box-shadow: 0px 0px 5px #999;
+	-webkit-box-shadow: 0px 0px 5px #999;
+	border: 1px solid #556f8c;
+	cursor: pointer;
+}
+</style>
+
+<script type="text/javascript">
+	$(document).ready(
+			function() {
+				$("#locales").change(
+						function() {
+							var selectedOption = $('#locales').val();
+							if (selectedOption != '') {
+								window.location.replace('international?lang='
+										+ selectedOption);
+							}
+						});
+			});
+</script>
+</head>
+
+<body>
+    <span th:text="#{lang.change}"></span>:
+	<select id="locales">
+		<option value=""></option>
+		<option value="en" th:text="#{lang.eng}"></option>
+		<option value="fr" th:text="#{lang.fr}"></option>
+	</select>
+	<div id="contact">
+		<h1>#{inscription}</h1>
+		<form action="#" method="post">
+			<fieldset>
+				<label for=#{nom}>#{nom}:</label> <input type="text" id="name"
+					placeholder=#{placeHolderNom} /> <label for="email">#{Email}</label>
+				<input type="email" id="email"
+					placeholder=#{placeHolderEmail} /> <label for="message">#{Description}</label>
+				<textarea id="message" placeholder=#{placeHolderDecrip}></textarea>
+
+				<input type="submit" value=#{inscrire} />
+
+			</fieldset>
+		</form>
+	</div>
+
+</body>
+</html>
+</body>
+</html>

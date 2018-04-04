@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Connexion</title>
+</head>
+<body>
+<div>
+		<ul th:object="${user}">
+			<li th:text="${user.email}"></li>
+			<li th:text="${user.prenom}"></li>
+			<li th:text="${user.nom}"></li>
+			<li th:text="${user.numTel}"></li>
+			<li th:text="${user.dateNaissance}"></li>
+			<li th:text="${user.sexe}"></li>
+			<li th:text="${user.pseudo}"></li>		
+		</ul>
+	</div>
+</body>
+</html>

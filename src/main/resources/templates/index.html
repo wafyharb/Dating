@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<title>CSS3 Contact Form</title>
+<link th:href=@{css/style.css} rel="stylesheet" type="text/css"
+	media="screen" />
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#locales").change(function() {
+			var selectedOption = $('#locales').val();
+			if (selectedOption != '') {
+				window.location.replace('locale?lang=' + selectedOption);
+			}
+		});
+	});
+</script>
+</head>
+<body>
+	<span class="langue" th:text="#{lang.change}"></span>:
+	<select class="langue" id="locales">
+		<option value=""></option>
+		<option value="en" th:text="#{lang.eng}"></option>
+		<option value="fr" th:text="#{lang.fr}"></option>
+	</select>
+	
+    <ul>
+			<li><a th:href=@{/user} th:text="#{inscription}" ></a></li>
+			<li><a th:href=@{connexion.html} th:text="#{connexion}" ></a></li>
+			
+		</ul>
+		<img th:src=@{/images/back2.jpg}>
+	
+
+</body>
+</html>
