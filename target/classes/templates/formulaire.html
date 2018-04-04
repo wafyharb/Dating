@@ -154,9 +154,10 @@
 				id="loisir" th:field="*{centreInteret.loisir}" />
 			<fieldset>
 			<h1 th:text="#{user.photo}"></h1>
-               <label for="sport" th:text="#{sport}"></label> <input
-				type="text" id="sport" th:field="*{centreInteret.sport}" />
+               <label for="photo" th:text="#{photo}"></label> 
+               <input type="file" id="photo" th:field="*{photo.lien}" />
 			</fieldset>
+			<input type="submit" th:value="#{submit}">
 		</form>
 	</div>
 </body>
