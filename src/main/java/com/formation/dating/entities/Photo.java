@@ -17,20 +17,12 @@ public class Photo {
 	private String lien;
 	@Column(length = 2)
 	private Integer note;
-    @ManyToOne
-    @JoinColumn(name="photos")
-    private Utilisateur utilisateur;
+   
 	public Photo() {
 
 	}
     
-	public Utilisateur getUtilisateur() {
-		return utilisateur;
-	}
 
-	public void setUtilisateur(Utilisateur utilisateur) {
-		this.utilisateur = utilisateur;
-	}
 
 	public Photo(String lien, Integer note) {
 		super();

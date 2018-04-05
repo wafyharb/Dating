@@ -30,26 +30,24 @@
 	<img th:src=@{/images/back2.jpg}>
 	<div id="contact">
 		<h1 th:text="#{inscription}"></h1>
-		<form th:action="@{/user}" th:object="${user}" method="post">
+		<form th:action="@{/user}" method="post">
 			<fieldset>
-				<label for="nom" th:text="#{nom}"></label> <input type="text"
-					id="name" th:placeholder="#{placeHolderNom}" th:field="*{nom}" />
-				<label for="email" th:text="#{mail}"> </label> <input type="email"
-					id="email" th:placeholder="#{placeHolderEmail}" th:field="*{email}" />
-				<label for="prenom" th:text="#{prenom}"> </label> <input type="text"
-					id="prenom" th:field="*{prenom}" /> <label for="datedenaissance"
-					th:text="#{datedenaissance}" th:field="*{dateNaissance}"> </label>
-				<input type="date" id="datedenaissance" /> <label for="mr">
-					Homme</label> <input type="radio" id="m" th:field="*{sexe}" value="Homme"
-					checked /> <label for="mme"> Femme</label> <input type="radio"
-					id="mme" th:field="*{sexe}" value="Femme" /><br> <label
-					for="pseudo" th:text="#{pseudo}" th:field="*{pseudo}"> </label> <input
-					type="text" id="pseudo" /> <label for="numTel" th:text="#{numTel}">
-				</label> <input type="text" id="numTel" th:field="*{numTel}" /> <label
-					for="motDePass" th:text="#{motDePass}"> </label> <input type="text"
-					id="motDePass" th:field="*{motDePass}" /> <label for="message"
-					th:text="#{description}" th:field="*{description}"></label>
-				<textarea id="message" th:placeholder="#{placeHolderDescrip}"></textarea>
+				<input type="text" th:placeholder="#{placeHolderNom}" th:field="*{user.nom}" />
+				 <input type="email" th:placeholder="#{placeHolderEmail}" th:field="*{user.email}" /> 
+					<input type="text" th:placeholder="#{prenom}"th:field="*{user.prenom}" />
+					 <input type="date" th:placeholder="#{datedenaissance}" th:field="*{user.dateNaissance}" />
+					  <label for="mr"> Homme</label>
+					   <input	type="radio" id="m" th:field="*{user.sexe}" value="Homme" checked />
+				     <label for="mme"> Femme</label> 
+				       <input type="radio" id="mme" th:field="*{user.sexe}" value="Femme" /><br>
+			        	  <input type="text" th:placeholder="#{pseudo}" th:field="*{user.pseudo}" />
+				       <input type="text" id="numTel" th:placeholder="#{numTel}"
+					th:field="*{user.numTel}" /> <label for="motDePass"
+					t> </label> <input type="password"
+					h:placeholder="#{motDePass}" th:field="*{user.motDePass}" /> <label
+					for="message" th:placeholder="#{description}"></label>
+				<textarea id="message" th:placeholder="#{placeHolderDescrip}"
+					th:field="*{user.description}"></textarea>
 
 
 			</fieldset>
@@ -79,84 +77,124 @@
 			<h1 th:text="#{user.situation}"></h1>
 
 			<fieldset>
-				<label th:text="#{statutPerso}"></label> <select
-					th:field="*{situation.statutPerso}" id=type>
-					<option th:each="type : ${statutPerso}" th:value="${type.name()}"
-						th:text="${type}"></option>
-				</select> <label th:text="#{statutPro}"></label> <select
-					th:field="*{situation.statutPro}" id=type>
-					<option th:each="type : ${statutPro}" th:value="${type.name()}"
-						th:text="${type}"></option>
-				</select> <label for="pref" th:text="#{fumeur}"></label> <select
-					th:field="*{situation.fumeur}" id=type>
-					<option th:each="type : ${fumer}" th:value="${type.name()}"
-						th:text="${type}"></option>
-				</select> <label for="pref" th:text="#{orientation}"></label> <select
-					th:field="*{situation.orientation}" id=type>
-					<option th:each="type : ${orientation}" th:value="${type.name()}"
-						th:text="${type}"></option>
-				</select> <label for="pref" th:text="#{alcool}"></label> <select
-					th:field="*{situation.alcool}" id=type>
-					<option th:each="type : ${alcool}" th:value="${type.name()}"
-						th:text="${type}"></option>
-				</select> <label for="nb" th:text="#{situation.nbrEnfant}"></label> <input
-					type="text" id="ville" th:field="*{situation.nbEnfant}" />
+				<div>
+					<label th:text="#{statutPerso}"></label> <select
+						th:field="*{situation.statutPerso}">
+						<option th:each="type : ${statutPerso}" th:value="${type.name()}"
+							th:text="${type}"></option>
+					</select>
+				</div>
+				<br>
+				<br>
+				<div>
+					<label th:text="#{statutPro}"></label> <select
+						th:field="*{situation.statutPro}">
+						<option th:each="type : ${statutPro}" th:value="${type.name()}"
+							th:text="${type}"></option>
+					</select>
+
+				</div>
+				<br>
+				<br>
+				<div>
+					<label th:text="#{fumeur}"></label> <select
+						th:field="*{situation.fumeur}">
+						<option th:each="type : ${fumer}" th:value="${type.name()}"
+							th:text="${type}"></option>
+					</select>
+
+				</div>
+				<br>
+				<br>
+				<div>
+					<label th:text="#{orientation}"></label> <select
+						th:field="*{situation.orientation}">
+						<option th:each="type : ${orientation}" th:value="${type.name()}"
+							th:text="${type}"></option>
+					</select>
+				</div>
+				<br>
+				<br>
+				<div>
+					<label th:text="#{alcool}"></label> <select
+						th:field="*{situation.alcool}" id=type>
+						<option th:each="type : ${alcool}" th:value="${type.name()}"
+							th:text="${type}"></option>
+					</select>
+				</div>
+				<br>
+				<br> <label for="nb" th:text="#{situation.nbrEnfant}"></label>
+				<input type="text" id="ville" th:field="*{situation.nbrEnfant}" />
 
 			</fieldset>
 			<h1 th:text="#{user.apparence}"></h1>
 			<label for="taille" th:text="#{apparence.taille}"></label> <input
 				type="text" id="taille" th:field="*{apparence.taille}" /> <label
-				for="masse" th:text="#{apparence.masse}"></label> <input type="text"
-				id="masse" th:field="*{apparence.masse}" /> <label
-				th:text="#{couleurYeux}"></label> <select
-				th:field="*{apparence.couleurYeux}" id=type>
-				<option th:each="type : ${couleurYeux}" th:value="${type.name()}"
-					th:text="${type}"></option>
-			</select> <label th:text="#{couleurCheveux}"></label> <select
-				th:field="*{apparence.couleurCheveux}" id=type>
-				<option th:each="type : ${couleurCheveux}" th:value="${type.name()}"
-					th:text="${type}"></option>
-			</select> <label th:text="#{typeCheveux}"></label> <select
-				th:field="*{apparence.typeCheveux}" id=type>
-				<option th:each="type : ${typecheveux}" th:value="${type.name()}"
-					th:text="${type}"></option>
-			</select> <label th:text="#{origine}"></label> <select
-				th:field="*{apparence.origine}" id=type>
-				<option th:each="type : ${origin}" th:value="${type.name()}"
-					th:text="${type}"></option>
-			</select>
+				for="masse" th:text="#{apparence.masse}"> </label> <input
+				type="text" id="masse" th:field="*{apparence.masse}" /> <br>
+			<div>
+				<label th:text="#{couleurYeux}"></label> <select
+					th:field="*{apparence.couleurYeux}">
+					<option th:each="type : ${couleurYeux}" th:value="${type.name()}"
+						th:text="${type}"></option>
+				</select>
+			</div>
+			<br> <br>
+			<div>
+				<label th:text="#{couleurCheveux}"></label> <select
+					th:field="*{apparence.couleurcheveux}">
+					<option th:each="type : ${couleurCheveux}"
+						th:value="${type.name()}" th:text="${type}"></option>
 
+				</select>
+			</div>
+			<br> <br>
+			<div>
+				<label th:text="#{typeCheveux}"></label> <select
+					th:field="*{apparence.typeCheveux}">
+					<option th:each="type : ${typecheveux}" th:value="${type.name()}"
+						th:text="${type}"></option>
+				</select>
+			</div>
+			<br> <br>
+			<div>
+				<label th:text="#{origine}"></label> <select
+					th:field="*{apparence.origine}">
+					<option th:each="type : ${origin}" th:value="${type.name()}"
+						th:text="${type}"></option>
+				</select>
+			</div>
 
 			<fieldset>
-			      <h1 th:text="#{user.multimedia}"></h1>
-			      
-			      <label th:text="#{typemedia}"></label> <select
-				th:field="*{multimedia.typeMultimedia}" id=type>
-				<option th:each="type : ${typeMulti}" th:value="${type.name()}"
-					th:text="${type}"></option>
-			        </select>
-			      
-			      <label for="genre" th:text="#{genre}"></label> <input
-				type="text" id="genre" th:field="*{multimedia.genre}" />
-				 <label for="titre" th:text="#{titre}"></label> 
-				 <input type="text" id="titre" th:field="*{multimedia.titre}" />
-				 <label for="artiste" th:text="#{artiste}"></label> 
-				 <input type="text" id="artiste" th:field="*{multimedia.artiste}" />
-				 
+				<h1 th:text="#{user.multimedia}"></h1>
+				<div>
+					<label th:text="#{typemedia}"></label> <select
+						th:field="*{multimedia.typeMultimedia}" id=type>
+						<option th:each="type : ${typeMulti}" th:value="${type.name()}"
+							th:text="${type}"></option>
+					</select>
+				</div>
+				<label for="genre" th:text="#{genre}"></label> <input type="text"
+					id="genre" th:field="*{multimedia.genre}" /> <label for="titre"
+					th:text="#{titre}"></label> <input type="text" id="titre"
+					th:field="*{multimedia.titre}" /> <label for="artiste"
+					th:text="#{artiste}"></label> <input type="text" id="artiste"
+					th:field="*{multimedia.artiste}" />
+
 			</fieldset>
-			
+
 			<h1 th:text="#{user.centreInteret}"></h1>
-             
-			      <label for="sport" th:text="#{sport}"></label> <input
-				type="text" id="sport" th:field="*{centreInteret.sport}" />
-				 <label
-				for="loisir" th:text="#{loisir}"></label> <input type="text"
-				id="loisir" th:field="*{centreInteret.loisir}" />
+
+			<label for="sport" th:text="#{sport}"></label> <input type="text"
+				id="sport" th:field="*{centreInteret.sport}" /> <label for="loisir"
+				th:text="#{loisir}"></label> <input type="text" id="loisir"
+				th:field="*{centreInteret.loisir}" />
 			<fieldset>
-			<h1 th:text="#{user.photo}"></h1>
-               <label for="sport" th:text="#{sport}"></label> <input
-				type="text" id="sport" th:field="*{centreInteret.sport}" />
+				<h1 th:text="#{user.photo}"></h1>
+				<label for="photo" th:text="#{photo}"></label> <input type="file"
+					th:field="*{photo.lien}" />
 			</fieldset>
+			<input type="submit" value="enregistrer">
 		</form>
 	</div>
 </body>

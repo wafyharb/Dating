@@ -37,62 +37,6 @@ public class Utilisateur {
 	@JoinColumn(name="adresse")
 	private Adresse adresse;
 	
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public Adresse getAdresse() {
-		return adresse;
-	}
-
-	public void setAdresse(Adresse adresse) {
-		this.adresse = adresse;
-	}
-
-	public Situation getSituation() {
-		return situation;
-	}
-
-	public void setSituation(Situation situation) {
-		this.situation = situation;
-	}
-
-	public List<CentreInteret> getCentresInterets() {
-		return centresInterets;
-	}
-
-	public void setCentresInterets(List<CentreInteret> centresInterets) {
-		this.centresInterets = centresInterets;
-	}
-
-	public Adresse getApparence() {
-		return apparence;
-	}
-
-	public void setApparence(Adresse apparence) {
-		this.apparence = apparence;
-	}
-
-	public List<Photo> getPhotos() {
-		return photos;
-	}
-
-	public void setPhotos(List<Photo> photos) {
-		this.photos = photos;
-	}
-
-	public List<Utilisateur> getFavoris() {
-		return favoris;
-	}
-
-	public void setFavoris(List<Utilisateur> favoris) {
-		this.favoris = favoris;
-	}
-
 	@ManyToOne
 	@JoinColumn(name="situation")
 	private Situation situation;
@@ -102,7 +46,7 @@ public class Utilisateur {
     
 	@ManyToOne
 	@JoinColumn(name="apparence")
-	private Adresse apparence;
+	private Apparence apparence;
 	
 	@OneToMany
 	private List<Photo> photos;
@@ -123,7 +67,7 @@ public class Utilisateur {
 	}
     
 	public Utilisateur() {
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	public String getEmail() {
@@ -198,6 +142,61 @@ public class Utilisateur {
 		this.type = type;
 	}
 
-	
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Adresse getAdresse() {
+		return adresse;
+	}
+
+	public void setAdresse(Adresse adresse) {
+		this.adresse = adresse;
+	}
+
+	public Situation getSituation() {
+		return situation;
+	}
+
+	public void setSituation(Situation situation) {
+		this.situation = situation;
+	}
+
+	public List<CentreInteret> getCentresInterets() {
+		return centresInterets;
+	}
+
+	public void setCentresInterets(List<CentreInteret> centresInterets) {
+		this.centresInterets = centresInterets;
+	}
+
+	public Apparence getApparence() {
+		return apparence;
+	}
+
+	public void setApparence(Apparence apparence2) {
+		this.apparence = apparence2;
+	}
+
+	public List<Photo> getPhotos() {
+		return photos;
+	}
+
+	public void setPhotos(List<Photo> photos) {
+		this.photos = photos;
+	}
+
+	public List<Utilisateur> getFavoris() {
+		return favoris;
+	}
+
+	public void setFavoris(List<Utilisateur> favoris) {
+		this.favoris = favoris;
+	}
+
 
 }

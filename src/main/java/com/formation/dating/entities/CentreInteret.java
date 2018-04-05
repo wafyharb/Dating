@@ -1,5 +1,6 @@
 package com.formation.dating.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -21,9 +22,9 @@ public class CentreInteret {
 	@ManyToMany
 	List<Utilisateur> utilisateurs;
 	@ManyToMany(mappedBy="centresinterets")
-	List<Multimedia> multimedias;
+	List<Multimedia> multimedias=new ArrayList<Multimedia>();;
 	public CentreInteret() {
-
+		//List<Multimedia> multimedias= new ArrayList<Multimedia>();
 	}
 
 	public List<Utilisateur> getUtilisateurs() {
