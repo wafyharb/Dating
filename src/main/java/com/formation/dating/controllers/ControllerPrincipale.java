@@ -57,7 +57,6 @@ public class ControllerPrincipale {
 	private final MultimediaService multimediaService;
 
 	@Autowired
-	
 
 	/*
 	 * @GetMapping(value = "/") public ModelAndView hello() { ModelAndView mav = new
@@ -74,18 +73,18 @@ public class ControllerPrincipale {
 		mav.addObject("photo", new Photo());
 		mav.addObject("apparence", new Apparence());
 		mav.addObject("multimedia", new Multimedia());
-		mav.addObject("prefixes",AdressePrefixe.values());
-		mav.addObject("typerues",AdresseTypeRue.values());
-		mav.addObject("alcool",Alcool.values());
-		mav.addObject("couleurcheveux",CouleurCheveux.values());
-		mav.addObject("couleuryeux",CouleurYeux.values());
-		mav.addObject("fumer",Fumer.values());
-		mav.addObject("orientation",Orientation.values());
+		mav.addObject("prefixes", AdressePrefixe.values());
+		mav.addObject("typerues", AdresseTypeRue.values());
+		mav.addObject("alcool", Alcool.values());
+		mav.addObject("couleurcheveux", CouleurCheveux.values());
+		mav.addObject("couleuryeux", CouleurYeux.values());
+		mav.addObject("fumer", Fumer.values());
+		mav.addObject("orientation", Orientation.values());
 		mav.addObject("origin", Origin.values());
-		mav.addObject("statutPerso",StatutPerso.values());
-		mav.addObject("statutPro",StatutPro.values());
-		mav.addObject("typeCheveux",TypeCheuveux.values());
-		mav.addObject("typeMulti",TypeMultimedia.values());				
+		mav.addObject("statutPerso", StatutPerso.values());
+		mav.addObject("statutPro", StatutPro.values());
+		mav.addObject("typeCheveux", TypeCheuveux.values());
+		mav.addObject("typeMulti", TypeMultimedia.values());
 		return mav;
 	}
 
@@ -104,75 +103,79 @@ public class ControllerPrincipale {
 
 	@RequestMapping(value = "/user", method = RequestMethod.POST)
 	public ModelAndView add(@Valid @ModelAttribute(value = "user") Utilisateur user, BindingResult userResult,
-            @Valid @ModelAttribute(value = "adresse") Adresse adresse, BindingResult adresseResult,
-            @Valid @ModelAttribute(value = "situation") Situation situation, BindingResult situationResult,
-            @Valid @ModelAttribute(value = "apparence") Apparence apparence, BindingResult apparenceResult,
-            @Valid @ModelAttribute(value = "photo") Photo photo, BindingResult photoResult,
-            @Valid @ModelAttribute(value = "multimedia") Multimedia media, BindingResult mediaResult,
-            @Valid @ModelAttribute(value = "centreInteret") CentreInteret centreInteret, BindingResult ciResult) {
-       
+			@Valid @ModelAttribute(value = "adresse") Adresse adresse, BindingResult adresseResult,
+			@Valid @ModelAttribute(value = "situation") Situation situation, BindingResult situationResult,
+			@Valid @ModelAttribute(value = "apparence") Apparence apparence, BindingResult apparenceResult,
+			@Valid @ModelAttribute(value = "photo") Photo photo, BindingResult photoResult,
+			@Valid @ModelAttribute(value = "multimedia") Multimedia media, BindingResult mediaResult,
+			@Valid @ModelAttribute(value = "centreInteret") CentreInteret centreInteret, BindingResult ciResult) {
+
 		adresseService.add(adresse);
 		situationService.add(situation);
 		apparenceService.add(apparence);
 		photoService.add(photo);
 		multimediaService.add(media);
 		user.setAdresse(adresse);
-        user.setApparence(apparence);
-        List<Multimedia> medias= new ArrayList<Multimedia>();
-        medias.add(media);
-        centreInteret.setMultimedias(medias);
-        centreInteretService.add(centreInteret);
-        
-        List<Photo> photos= new ArrayList<Photo>();
-        photos.add(photo);
-        
-        user.setPhotos(photos);   
+		user.setApparence(apparence);
+		List<Multimedia> medias = new ArrayList<Multimedia>();
+		medias.add(media);
+		centreInteret.setMultimedias(medias);
+		centreInteretService.add(centreInteret);
+
+		List<Photo> photos = new ArrayList<Photo>();
+		photos.add(photo);
+
+		user.setPhotos(photos);
 		userService.add(user);
-		ModelAndView mav= new ModelAndView("connexion.html").addObject("user", user);
-		
-		 return mav;
+		ModelAndView mav = new ModelAndView("connexion.html").addObject("user", user);
+
+		return mav;
 	}
-	@GetMapping(value="/connexion")
-	public String affichConnect(ModelMap modelmap)
-	{
+
+	@GetMapping(value = "/connexion")
+	public String affichConnect(ModelMap modelmap) {
 		modelmap.addAttribute("user", new Utilisateur());
 		return "connexion";
 	}
-	@PostMapping(value="/connexion")
-	public String verifConnect(@ModelAttribute(value="user")  Utilisateur utilisateur,HttpSession httpsession)
-	{
-		System.out.println(utilisateur.getEmail()+utilisateur.getMotDePass());
-		Utilisateur us= userService.findUtilisateurByEmailAndMotDePass(utilisateur.getEmail(), utilisateur.getMotDePass());
-		System.out.println(us.getEmail()+us.getMotDePass());
-		if (us==null)
-		{
-			return "connexion";
-		}else {
-		session(httpsession,utilisateur);
+	@GetMapping(value = "/")
+	public String home() {
+		
 		return "acceuil";
-		}
 	}
-	public void session(HttpSession httpsession, Utilisateur user)
-	{
-		String sessionKey="dating";
+	@PostMapping(value = "/connexion")
+	public String verifConnect(@ModelAttribute(value = "user") Utilisateur utilisateur, HttpSession httpsession) {
+		System.out.println(utilisateur.getEmail() + utilisateur.getMotDePass());
+		Utilisateur us = userService.findUtilisateurByEmailAndMotDePass(utilisateur.getEmail(),
+				utilisateur.getMotDePass());
+		System.out.println(us.getEmail() + us.getMotDePass());
+
+		if (us != null)
+		{	session(httpsession,utilisateur);
+			return "redirect:/";}
+
+		return "connexion";
+
+	}
+
+	public void session(HttpSession httpsession, Utilisateur user) {
+		String sessionKey = "dating";
 		httpsession.setAttribute("sessionKey", sessionKey);
-		Object time= httpsession.getAttribute(sessionKey);
-		if(time==null)
-		{
-			time= LocalDateTime.now();
+		Object time = httpsession.getAttribute(sessionKey);
+		if (time == null) {
+			time = LocalDateTime.now();
 			httpsession.setAttribute(sessionKey, time);
-			
+
 		}
 		httpsession.setAttribute("name", sessionKey);
 		httpsession.setAttribute("email", user.getEmail());
 		httpsession.setAttribute("pseudo", user.getPseudo());
-		httpsession.setMaxInactiveInterval(60*30);
+		httpsession.setMaxInactiveInterval(60 * 30);
 	}
-	@GetMapping(value="/deconnexion")
-	public String logout(HttpSession httpsession)
-	{
+
+	@GetMapping(value = "/deconnexion")
+	public String logout(HttpSession httpsession) {
 		httpsession.invalidate();
-		
+
 		return "index";
 	}
 }
