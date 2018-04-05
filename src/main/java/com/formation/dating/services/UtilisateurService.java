@@ -47,4 +47,8 @@ public class UtilisateurService {
 	{
 		ur.deleteById(id);
 	}
+	public Utilisateur findUtilisateurByEmailAndMotDePass(String email, String motDePAss)
+	{
+		return ur.findUtilisateurByEmailAndMotDePass(email, motDePAss);
+	}
 }

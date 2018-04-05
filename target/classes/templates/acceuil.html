@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h1 th:text="${session.email}"> Bienvenue dans la session</h1>
+<a th:href=@{/deconnexion}>Se deconnecter</a>
+</body>
+</html>

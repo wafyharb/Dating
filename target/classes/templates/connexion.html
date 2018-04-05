@@ -3,9 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <title>Connexion</title>
+<link th:href=@{css/style.css} rel="stylesheet" type="text/css"
+	media="screen" />
 </head>
 <body>
-<div>
+<!--	<div>
 		<ul th:object="${user}">
 			<li th:text="${user.email}"></li>
 			<li th:text="${user.prenom}"></li>
@@ -13,8 +15,29 @@
 			<li th:text="${user.numTel}"></li>
 			<li th:text="${user.dateNaissance}"></li>
 			<li th:text="${user.sexe}"></li>
-			<li th:text="${user.pseudo}"></li>		
+			<li th:text="${user.adresse.codePostale}">
+			<li th:text="${user.adresse.numero}">
+			<li th:text="${user.adresse.nomRue}">
+			<li th:text="${user.adresse.complement}">
+			<li th:text="${user.adresse.ville}">				  
+			<li th:text="${user.situation.statutPerso}">
+			<li th:text="${user.situation.statutPro}">
+			<li th:text="${user.apparence.taille">
+		    <li th:text="${user.apparence.couleurYeux">
+			</li>
 		</ul>
+	</div>-->
+	<img th:src=@{/images/back2.jpg}>
+	<div id="contact2">
+		<h1 th:text="#{connexion}"></h1>
+		<form th:action="@{/connexion}" th:object= "${user}" method="post">
+			<fieldset>
+
+				<input type="email" th:placeholder="#{placeHolderEmail}" th:field="*{email}"/>
+			    <input type="password" th:placeholder="#{placeHolderPW}" th:field="*{motDePass}"/>
+			</fieldset>
+			<input type="submit" value="Connecter">
+		</form>
 	</div>
 </body>
 </html>

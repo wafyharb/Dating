@@ -15,13 +15,13 @@ public class Situation {
 	private Integer nbrEnfant;
 	@Column(length = 25)
 	private String statutPro;
-	@Column(length = 10)
+	@Column(length = 20)
 	private String statutPerso;
-	@Column(length = 10)
+	@Column(length = 20)
 	private String orientation;
-	@Column(length = 10)
+	@Column(length = 20)
 	private String fumeur;
-	@Column(length = 10)
+	@Column(length = 20)
 	private String alcool;
 
 	public Situation() {
@@ -47,11 +47,11 @@ public class Situation {
 		this.id = id;
 	}
 
-	public int getNbrEnfant() {
+	public Integer getNbrEnfant() {
 		return nbrEnfant;
 	}
 
-	public void setNbrEnfant(int nbrEnfant) {
+	public void setNbrEnfant(Integer nbrEnfant) {
 		this.nbrEnfant = nbrEnfant;
 	}
 
