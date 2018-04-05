@@ -15,7 +15,9 @@ body, div, h1, form, fieldset, input, textarea {
 html {
 	height: 100%;
 }
-
+#contact,#contact2{
+	padding-left: 40%;
+}
 body {
 	font-family: sans-serif;
 }
@@ -87,13 +89,7 @@ h1 {
 	text-shadow: 0px 1px 0px #f2f2f2;
 }
 
-input[type=submit]:hover, input[type=reset]:hover {
- background-color:#FCDEDE;
- }
-input[type=submit]:active, input[type=reset]:active {
- background-color:#FCDEDE;
- box-shadow:1px 1px 1px #D83F3D inset;
-}
+
 ul {
 	display: inline;
 	list-style-type: none;
