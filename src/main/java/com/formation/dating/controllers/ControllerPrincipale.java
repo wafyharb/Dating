@@ -139,8 +139,9 @@ public class ControllerPrincipale {
 		return "connexion";
 	}
 	@GetMapping(value = "/acceuil")
-	public String home() {
-		
+	public String home(ModelMap map) {
+		System.out.println(userService.getAll());
+		map.addAttribute("users",userService.getAll());
 		return "acceuil";
 	}
 	@PostMapping(value = "/connexion")
@@ -152,7 +153,7 @@ public class ControllerPrincipale {
 
 		if (us != null)
 		{	session(httpsession,us);
-			return "acceuil";}
+			return "redirect:/acceuil";}
 
 		return "connexion";
 

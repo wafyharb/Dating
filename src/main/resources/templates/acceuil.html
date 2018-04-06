@@ -14,8 +14,7 @@
 			<li th:text="${session.user.nom}"></li>
 			<li th:text="${session.user.numTel}"></li>
 			<li th:text="${session.user.dateNaissance}"></li>
-			<li th:text="${session.user.sexe}"></li>
-			  
+			<li th:text="${session.user.sexe}"></li>			  
 			<li th:text="${session.user.adresse.codePostale}"></li>
 			<li th:text="${session.user.adresse.numero}"></li>
 			<li th:text="${session.user.adresse.nomRue}"></li>
@@ -28,5 +27,26 @@
 			
 		</ul>
 	</div>
+	 <h1>Listes des utilisateurs</h1>
+	 <div >
+	 <h1>Utilisateur</h1>
+		<ul th:each="user :${users}" >
+			<li th:text="${user.email}"></li>
+			<li th:text="${user.prenom}"></li>
+			<li th:text="${user.nom}"></li>
+			<li th:text="${user.numTel}"></li>
+			<li th:text="${user.dateNaissance}"></li>
+			<li th:text="${user.sexe}"></li>			  
+			<li th:text="${user.adresse.codePostale}"></li>
+			<li th:text="${user.adresse.numero}"></li>
+			<li th:text="${user.adresse.nomRue}"></li>
+			<li th:text="${user.adresse.complement}"></li>
+			<li th:text="${user.adresse.ville}"></li>				  				
+			<li th:text="${user.apparence.taille}"></li>
+		    <li th:text="${user.apparence.couleurYeux}"></li>
+		 		
+		</ul>
+	</div>
+	 
 </body>
 </html>

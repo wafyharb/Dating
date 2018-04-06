@@ -1,7 +1,6 @@
 package com.formation.dating.entities;
 
 import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -9,15 +8,20 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Pattern;
 
 @Entity
 public class Utilisateur {
-	
+
 	@Id
-	private String email;
-	@Column(length = 50)
-	private String nom;
 	@Column(length = 100)
+	@Pattern(message = "Email not good", regexp = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])")
+	private String email;
+	@Column(length = 70, name = "nom", nullable = false)
+	@Pattern(regexp = "(?i)[a-zàâçéèêëîïôûùüÿñæœ -_]{1,70}", message = "problem")
+	private String nom;
+	@Column(length = 100, name = "prenom", nullable = false)
+	@Pattern(regexp = "(?i)[a-zàâçéèêëîïôûùüÿñæœ -_]{1,100}")
 	private String prenom;
 	@Column(length = 10)
 	private String dateNaissance;
@@ -33,29 +37,30 @@ public class Utilisateur {
 	private String type;
 	@Column(length = 100)
 	private String description;
-	
+
 	@ManyToOne
-	@JoinColumn(name="adresse")
+	@JoinColumn(name = "adresse")
 	private Adresse adresse;
-	
+
 	@ManyToOne
-	@JoinColumn(name="situation")
+	@JoinColumn(name = "situation")
 	private Situation situation;
-	
-	@ManyToMany(mappedBy="utilisateurs")
+
+	@ManyToMany(mappedBy = "utilisateurs")
 	List<CentreInteret> centresInterets;
-    
+
 	@ManyToOne
-	@JoinColumn(name="apparence")
+	@JoinColumn(name = "apparence")
 	private Apparence apparence;
-	
+
 	@OneToMany
 	private List<Photo> photos;
-	
+
 	@ManyToMany
 	private List<Utilisateur> favoris;
-	
-	public Utilisateur(String email, String nom, String prenom, String dateNaissance, String sexe, String motDePass, String pseudo, String numTel) {
+
+	public Utilisateur(String email, String nom, String prenom, String dateNaissance, String sexe, String motDePass,
+			String pseudo, String numTel) {
 		this.email = email;
 		this.nom = nom;
 		this.prenom = prenom;
@@ -64,11 +69,11 @@ public class Utilisateur {
 		this.motDePass = motDePass;
 		this.pseudo = pseudo;
 		this.numTel = numTel;
-		
+
 	}
-    
+
 	public Utilisateur() {
-		
+
 	}
 
 	public String getEmail() {
@@ -171,6 +176,13 @@ public class Utilisateur {
 		return centresInterets;
 	}
 
+	@Override
+	public String toString() {
+		return "Utilisateur [email=" + email + ", nom=" + nom + ", prenom=" + prenom + ", dateNaissance="
+				+ dateNaissance + ", sexe=" + sexe + ", motDePass=" + motDePass + ", pseudo=" + pseudo + ", numTel="
+				+ numTel + ", type=" + type + ", description=" + description + "]";
+	}
+
 	public void setCentresInterets(List<CentreInteret> centresInterets) {
 		this.centresInterets = centresInterets;
 	}
@@ -198,6 +210,5 @@ public class Utilisateur {
 	public void setFavoris(List<Utilisateur> favoris) {
 		this.favoris = favoris;
 	}
-
 
 }
