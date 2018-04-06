@@ -33,6 +33,7 @@ public class Utilisateur {
 	private String type;
 	@Column(length = 100)
 	private String description;
+	
 	@ManyToOne
 	@JoinColumn(name="adresse")
 	private Adresse adresse;

@@ -26,18 +26,18 @@ import com.formation.dating.entities.Multimedia;
 import com.formation.dating.entities.Photo;
 import com.formation.dating.entities.Situation;
 import com.formation.dating.entities.Utilisateur;
-import com.formation.dating.enumeration.AdressePrefixe;
-import com.formation.dating.enumeration.AdresseTypeRue;
-import com.formation.dating.enumeration.Alcool;
-import com.formation.dating.enumeration.CouleurCheveux;
-import com.formation.dating.enumeration.CouleurYeux;
-import com.formation.dating.enumeration.Fumer;
-import com.formation.dating.enumeration.Orientation;
-import com.formation.dating.enumeration.Origin;
-import com.formation.dating.enumeration.StatutPerso;
-import com.formation.dating.enumeration.StatutPro;
-import com.formation.dating.enumeration.TypeCheuveux;
-import com.formation.dating.enumeration.TypeMultimedia;
+import com.formation.dating.enumerations.AdressePrefixe;
+import com.formation.dating.enumerations.AdresseTypeRue;
+import com.formation.dating.enumerations.Alcool;
+import com.formation.dating.enumerations.CouleurCheveux;
+import com.formation.dating.enumerations.CouleurYeux;
+import com.formation.dating.enumerations.Fumer;
+import com.formation.dating.enumerations.Orientation;
+import com.formation.dating.enumerations.Origin;
+import com.formation.dating.enumerations.StatutPerso;
+import com.formation.dating.enumerations.StatutPro;
+import com.formation.dating.enumerations.TypeCheuveux;
+import com.formation.dating.enumerations.TypeMultimedia;
 import com.formation.dating.services.AdresseService;
 import com.formation.dating.services.ApparenceService;
 import com.formation.dating.services.CentreInteretService;
@@ -117,6 +117,7 @@ public class ControllerPrincipale {
 		multimediaService.add(media);
 		user.setAdresse(adresse);
 		user.setApparence(apparence);
+		user.setSituation(situation);
 		List<Multimedia> medias = new ArrayList<Multimedia>();
 		medias.add(media);
 		centreInteret.setMultimedias(medias);
@@ -147,10 +148,10 @@ public class ControllerPrincipale {
 		System.out.println(utilisateur.getEmail() + utilisateur.getMotDePass());
 		Utilisateur us = userService.findUtilisateurByEmailAndMotDePass(utilisateur.getEmail(),
 				utilisateur.getMotDePass());
-	//	System.out.println(us.getEmail() + us.getMotDePass());
+	//System.out.println(us.getEmail() + us.getMotDePass()+us.getAdresse().getVille());
 
 		if (us != null)
-		{	session(httpsession,utilisateur);
+		{	session(httpsession,us);
 			return "acceuil";}
 
 		return "connexion";
@@ -166,10 +167,11 @@ public class ControllerPrincipale {
 			httpsession.setAttribute(sessionKey, time);
 
 		}
+		httpsession.setAttribute("user", user);
 		httpsession.setAttribute("name", sessionKey);
 		httpsession.setAttribute("email", user.getEmail());
 		httpsession.setAttribute("pseudo", user.getPseudo());
-		httpsession.setMaxInactiveInterval(60 * 30);
+		httpsession.setMaxInactiveInterval(30);
 	}
 
 	@GetMapping(value="/deconnexion")

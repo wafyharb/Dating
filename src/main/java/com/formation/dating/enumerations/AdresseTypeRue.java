@@ -1,4 +1,4 @@
-package com.formation.dating.enumeration;
+package com.formation.dating.enumerations;
 
 public enum AdresseTypeRue {
   Rue,Boulevard,Chemin,Allee;
