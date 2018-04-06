@@ -21,7 +21,7 @@
 </head>
 <body>
 <body>
-	<span class="langue" th:text="#{lang.change}"></span>:
+	<span class="langue" th:text="#{lang.change}"></span>
 	<select class="langue" id="locales">
 		<option value=""></option>
 		<option value="en" th:text="#{lang.eng}"></option>
@@ -30,7 +30,7 @@
 	<img th:src=@{/images/back2.jpg}>
 	<div id="contact">
 		
-		<form th:action="@{/user}" method="post">
+		<form th:action="@{/user}" method="post" enctype="multipart/form-data">
 			<fieldset>
 			<h1 th:text="#{inscription}"></h1>
 				<input type="text" th:placeholder="#{placeHolderNom}" th:field="*{user.nom}" />

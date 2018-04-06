@@ -29,8 +29,9 @@
 	</div>
 	 <h1>Listes des utilisateurs</h1>
 	 <div >
-	 <h1>Utilisateur</h1>
-		<ul th:each="user :${users}" >
+	 
+		<ul th:each="user,iter :${users}" >
+		    <li> <strong>Utilisateur</strong> <strong th:text="${iter.index}"></strong></li>
 			<li th:text="${user.email}"></li>
 			<li th:text="${user.prenom}"></li>
 			<li th:text="${user.nom}"></li>

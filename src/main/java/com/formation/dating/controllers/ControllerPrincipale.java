@@ -1,14 +1,21 @@
 
 package com.formation.dating.controllers;
 
+import java.io.File;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.apache.tomcat.util.http.fileupload.FileItem;
+import org.apache.tomcat.util.http.fileupload.RequestContext;
+import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
+import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -133,27 +140,61 @@ public class ControllerPrincipale {
 		return mav;
 	}
 
+	public void upload(ModelMap map,HttpRequest request) {
+		 if (ServletFileUpload.isMultipartContent((HttpServletRequest) request)) {
+	            File path = null;
+	            try {
+	                List<FileItem> multiparts = new ServletFileUpload(
+	                        new DiskFileItemFactory()).parseRequest((RequestContext) request);
+	                for (FileItem item : multiparts) {
+	                    if (!item.isFormField()) {
+	                        String name = new File(item.getName()).getName();       
+	                        path = new File("\\file\\");
+	                        if (!path.exists()) {
+	                            boolean status = path.mkdirs();
+	                        }
+	                        item.write(new File( path.getPath()+ File.separator + name));
+	                    }
+	                }
+	                //File uploaded successfully
+	                map.addAttribute("msg", "File Uploaded Successfully");
+	            } catch (Exception ex) {
+	                map.addAttribute("msg", "File Upload Failed due to " + ex);
+	            }
+	        } else {
+	            map.addAttribute("msg",
+	                    "Sorry this Servlet only handles file upload request");
+	        }
+	       
+	    }
+	 
+	
+
 	@GetMapping(value = "/connexion")
 	public String affichConnect(ModelMap modelmap) {
 		modelmap.addAttribute("user", new Utilisateur());
 		return "connexion";
 	}
+
 	@GetMapping(value = "/acceuil")
 	public String home(ModelMap map) {
 		System.out.println(userService.getAll());
-		map.addAttribute("users",userService.getAll());
+		map.addAttribute("users", userService.getAll());
 		return "acceuil";
 	}
+
 	@PostMapping(value = "/connexion")
 	public String verifConnect(@ModelAttribute(value = "user") Utilisateur utilisateur, HttpSession httpsession) {
 		System.out.println(utilisateur.getEmail() + utilisateur.getMotDePass());
 		Utilisateur us = userService.findUtilisateurByEmailAndMotDePass(utilisateur.getEmail(),
 				utilisateur.getMotDePass());
-	//System.out.println(us.getEmail() + us.getMotDePass()+us.getAdresse().getVille());
+		// System.out.println(us.getEmail() +
+		// us.getMotDePass()+us.getAdresse().getVille());
 
-		if (us != null)
-		{	session(httpsession,us);
-			return "redirect:/acceuil";}
+		if (us != null) {
+			session(httpsession, us);
+			return "redirect:/acceuil";
+		}
 
 		return "connexion";
 
@@ -175,7 +216,7 @@ public class ControllerPrincipale {
 		httpsession.setMaxInactiveInterval(30);
 	}
 
-	@GetMapping(value="/deconnexion")
+	@GetMapping(value = "/deconnexion")
 	public String logout(HttpSession httpsession) {
 		httpsession.invalidate();
 

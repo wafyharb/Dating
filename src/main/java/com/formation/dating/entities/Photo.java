@@ -18,6 +18,10 @@ public class Photo {
 	@Column(length = 2)
 	private Integer note;
    
+	
+	@ManyToOne
+	@JoinColumn(name = "photos")
+	private Utilisateur owner;
 	public Photo() {
 
 	}
