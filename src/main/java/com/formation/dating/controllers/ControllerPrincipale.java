@@ -1,21 +1,18 @@
 
 package com.formation.dating.controllers;
 
-import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
-import org.apache.tomcat.util.http.fileupload.FileItem;
-import org.apache.tomcat.util.http.fileupload.RequestContext;
-import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
-import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -24,7 +21,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.formation.dating.entities.Adresse;
 import com.formation.dating.entities.Apparence;
@@ -62,14 +62,17 @@ public class ControllerPrincipale {
 	private final PhotoService photoService;
 	private final CentreInteretService centreInteretService;
 	private final MultimediaService multimediaService;
+	private static String UPLOADED_FOLDER = "C://Users//helmi//Desktop//New Départure//Spring//Dating-master//src//main//resources//static//images//";
 
 	@Autowired
 
-	/*
-	 * @GetMapping(value = "/") public ModelAndView hello() { ModelAndView mav = new
-	 * ModelAndView("index.html"); mav.addObject("user", new Utilisateur()); return
-	 * mav; }
-	 */
+	@GetMapping(value = "/")
+	public ModelAndView hello() {
+		ModelAndView mav = new ModelAndView("index.html");
+		mav.addObject("users", userService.getAll());
+		return mav;
+	}
+
 	@GetMapping(value = "/user")
 	public ModelAndView inscription() {
 		ModelAndView mav = new ModelAndView("formulaire.html");
@@ -139,36 +142,29 @@ public class ControllerPrincipale {
 
 		return mav;
 	}
-
-	public void upload(ModelMap map,HttpRequest request) {
-		 if (ServletFileUpload.isMultipartContent((HttpServletRequest) request)) {
-	            File path = null;
-	            try {
-	                List<FileItem> multiparts = new ServletFileUpload(
-	                        new DiskFileItemFactory()).parseRequest((RequestContext) request);
-	                for (FileItem item : multiparts) {
-	                    if (!item.isFormField()) {
-	                        String name = new File(item.getName()).getName();       
-	                        path = new File("\\file\\");
-	                        if (!path.exists()) {
-	                            boolean status = path.mkdirs();
-	                        }
-	                        item.write(new File( path.getPath()+ File.separator + name));
-	                    }
-	                }
-	                //File uploaded successfully
-	                map.addAttribute("msg", "File Uploaded Successfully");
-	            } catch (Exception ex) {
-	                map.addAttribute("msg", "File Upload Failed due to " + ex);
-	            }
-	        } else {
-	            map.addAttribute("msg",
-	                    "Sorry this Servlet only handles file upload request");
-	        }
-	       
-	    }
-	 
-	
+    @PostMapping("/upload")
+	public String upload(@RequestParam("file")MultipartFile file, RedirectAttributes redirectAttributes) {
+		if(file.isEmpty())
+		{
+			redirectAttributes.addFlashAttribute("message","Please select an image");
+			return"error";}
+			try {
+				//Récuperer le fichier et le sauvegarder
+				byte[] bytes= file.getBytes();
+				Path path= Paths.get(UPLOADED_FOLDER+file.getOriginalFilename());
+				Files.write(path, bytes);
+			}
+		 catch (IOException e) {
+            e.printStackTrace();
+        }
+			
+			return"redirect:/error";
+		}
+    @GetMapping(value = "/upload")
+	public String upload() {
+		
+		return "upload";
+	}
 
 	@GetMapping(value = "/connexion")
 	public String affichConnect(ModelMap modelmap) {

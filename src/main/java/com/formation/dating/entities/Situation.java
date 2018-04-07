@@ -13,15 +13,15 @@ public class Situation {
 	private Long id;
 	@Column(length = 2)
 	private Integer nbrEnfant;
-	@Column(length = 25)
+	@Column(length = 50)
 	private String statutPro;
-	@Column(length = 20)
+	@Column(length = 50)
 	private String statutPerso;
-	@Column(length = 20)
+	@Column(length = 50)
 	private String orientation;
-	@Column(length = 20)
+	@Column(length = 50)
 	private String fumeur;
-	@Column(length = 20)
+	@Column(length = 50)
 	private String alcool;
 
 	public Situation() {

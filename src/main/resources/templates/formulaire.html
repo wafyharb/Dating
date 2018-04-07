@@ -36,15 +36,15 @@
 				<input type="text" th:placeholder="#{placeHolderNom}" th:field="*{user.nom}" />
 			    <input type="email" th:placeholder="#{placeHolderEmail}" th:field="*{user.email}" /> 
 			    <input type="text" th:placeholder="#{prenom}"th:field="*{user.prenom}" />
+			     <input type="password" th:placeholder="#{motDePass}" th:field="*{user.motDePass}" />
 			    <input type="date" th:placeholder="#{datedenaissance}" th:field="*{user.dateNaissance}" />
-			    <input type="password" th:placeholder="#{motDePass}" th:field="*{user.motDePass}" />
+			   
 			    <label for="mr"> Homme</label>
 				 <input	type="radio" id="m" th:field="*{user.sexe}" value="Homme" checked />
 				<label for="mme"> Femme</label> 
-				  <input type="radio" id="mme" th:field="*{user.sexe}" value="Femme" /><br>
+				 <input type="radio" id="mme" th:field="*{user.sexe}" value="Femme" /><br>
 			    <input type="text" th:placeholder="#{pseudo}" th:field="*{user.pseudo}" />
 				<input type="text" id="numTel" th:placeholder="#{numTel}" th:field="*{user.numTel}" /> 
-				<input type="password" th:placeholder="#{motDePass}" th:field="*{user.motDePass}" />
 				<textarea id="message" th:placeholder="#{placeHolderDescrip}" th:field="*{user.description}"></textarea>
 			</fieldset>
 
@@ -56,7 +56,7 @@
 				   <select th:field="*{adresse.typeRue}" id=type>
 					<option th:each="type : ${typerues}" th:value="${type.name()}" th:text="${type}"></option>
 				   </select>
-				 <input type="text" id="num" th:field="*{adresse.numero}" th:placeholder="#{adresse.numero}"/>
+				 <input type="text" th:field="*{adresse.numero}" th:placeholder="#{adresse.numero}"/>
 				 <input type="text" th:placeholder="#{adresse.nom}"th:field="*{adresse.nomRue}" /> 
 			     <input type="text" th:placeholder="#{adresse.comp}" th:field="*{adresse.complement}" />
 				 <input type="text" th:placeholder="#{adresse.cp}" th:field="*{adresse.codePostale}" /> 

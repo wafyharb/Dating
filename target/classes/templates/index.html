@@ -31,7 +31,17 @@
 
 	</ul>
 	<img th:src=@{/images/back2.jpg}>
-
+     <h1>Listes des utilisateurs</h1>
+	 <div >
+	 
+		<ul th:each="user,iter :${users}" >
+		    <li> <strong>Utilisateur</strong> <strong th:text="${iter.index}"></strong></li>
+			<li th:text="${user.email}"></li>
+			<li th:text="${user.motDePass}"></li>
+			
+		 		
+		</ul>
+	</div>
 
 </body>
 </html>
