@@ -2,11 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="utf-8" />
-<title>CSS3 Contact Form</title>
+<title>Speed Dating</title>
 <link th:href=@{css/style.css} rel="stylesheet" type="text/css"
 	media="screen" />
 <script
-	src="https://ajax.googleapis.c     ax/libs/jquery/3.1.1/jquery.min.js"></script>
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("#locales").change(function() {
@@ -19,30 +19,27 @@
 </script>
 </head>
 <body>
+<img class="back" th:src=@{/images/back.jpg}>
 	<span class="langue" th:text="#{lang.change}"></span>
 	<select class="langue" id="locales">
 		<option value=""></option>
 		<option value="en" th:text="#{lang.eng}"></option>
 		<option value="fr" th:text="#{lang.fr}"></option>
 	</select>
-	<ul>
-		<li><a th:href=@{/user} th:text="#{inscription}"></a></li>
-		<li><a th:href=@{/connexion} th:text="#{connexion}"></a></li>
-
-	</ul>
 	
-     <h1>Listes des utilisateurs</h1>
+		<a th:href=@{/user} th:text="#{inscription}"></a>
+		<a th:href=@{/connexion} th:text="#{connexion}"></a>
+     <h1>Speed Dating M2i</h1>
 	 <div >
-	 
+	   <span class="descrip"><strong>Pour Rencontrer John Vous n'avez qu'a s'inscrire</strong> </span>
 		<ul th:each="user,iter :${users}" >
+		  
 		    <!--<li> <strong>Utilisateur</strong> <strong th:text="${iter.index}"></strong></li> --> 
-			<li th:text="${user.email}"></li>
-			<li th:text="${user.motDePass}"></li>	
 			<li th:text="${user.pseudo}"></li>			
 			<!--  <li th:text="${user.photos}"></li>-->
-			<li th:text="${user.description}"></li>	
+			<li class="descrip" th:text="${user.description}"></li>	
 			<li th:each="photo:${user.photos}">
-		    <img th:src="@{ 'images/users_pictures/'+${photo.lien}} " width=300px height=300px>
+		    <img th:src="@{ 'images/users_pictures/'+${photo.lien}} " width=400px height=400px>
 		    </li>		 		
 		</ul>
 		

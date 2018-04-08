@@ -62,7 +62,7 @@ public class ControllerPrincipale {
 	private final PhotoService photoService;
 	private final CentreInteretService centreInteretService;
 	private final MultimediaService multimediaService;
-	private static String UPLOADED_FOLDER = "C://Users//helmi//Desktop//New Départure//Spring//Dating-master//src//main//resources//static//images//";
+	private static String UPLOADED_FOLDER = "C://Users//helmi//Desktop//New Départure//Spring//Dating-master//src//main//resources//static//images//users_pictures//";
 
 	@Autowired
 	public ControllerPrincipale(UtilisateurService userService, AdresseService adresseService,
@@ -83,7 +83,12 @@ public class ControllerPrincipale {
 		mav.addObject("users", userService.getAll());
 		return mav;
 	}
-
+	@GetMapping(value = "/profile")
+	public ModelAndView profile() {
+		ModelAndView mav = new ModelAndView("profile.html");
+		mav.addObject("users", userService.getAll());
+		return mav;
+	}
 	@GetMapping(value = "/user")
 	public ModelAndView inscription() {
 		ModelAndView mav = new ModelAndView("formulaire.html");
@@ -216,7 +221,7 @@ public class ControllerPrincipale {
 		// us.getMotDePass()+us.getAdresse().getVille());
 		if (us != null) {
 			session(httpsession, us);
-			return "redirect:/acceuil";
+			return "redirect:/profile";
 		}
 
 		return "connexion";

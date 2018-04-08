@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Profile</title>
+<link th:href=@{css/style.css} rel="stylesheet" type="text/css"
+	media="screen" />
+</head>
+<body>
+<img class="back" th:src=@{/images/back.jpg}>
+	<a th:href=@{/deconnexion}>Se deconnecter</a>
+	<a th:href=@{/desinscription}>Se désincrire</a>
+	<a th:href=@{/acceuil}>Acceuil</a>
+	
+<div class="profile">
+		<ul th:object="${session.user}">
+			<li th:text="${session.user.email}"></li>
+			<li th:text="${session.user.prenom}"></li>
+			<li th:text="${session.user.nom}"></li>
+			<li th:text="${session.user.numTel}"></li>
+			<li th:text="${session.user.dateNaissance}"></li>
+			<li th:text="${session.user.sexe}"></li>
+			<li th:text="${session.user.adresse.codePostale}"></li>
+			<li th:text="${session.user.adresse.numero}"></li>
+			<li th:text="${session.user.adresse.nomRue}"></li>
+			<li th:text="${session.user.adresse.complement}"></li>
+			<li th:text="${session.user.adresse.ville}"></li>
+			<li th:text="${session.user.apparence.taille}"></li>
+			<li th:text="${session.user.apparence.couleurYeux}"></li>
+			<li th:text="${session.user.situation.statutPro}"></li>
+			<li th:text="${session.user.situation.statutPerso}"></li>
+		</ul>
+		<img th:src="@{ '/images/users_pictures/'+${session.pic.lien}} "
+			width=400px height=400px>
+	</div>
+</body>
+</html>

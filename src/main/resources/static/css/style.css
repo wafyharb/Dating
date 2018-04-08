@@ -1,4 +1,4 @@
-++@charset "UTF-8";
+@charset "UTF-8";
 
 body, div, h1, form, fieldset, input, textarea {
 	margin: 0;
@@ -16,7 +16,7 @@ html {
 	height: 100%;
 }
 #contact,#contact2{
-	padding-left: 40%;
+	padding-left: 25%;
 }
 body {
 	font-family: sans-serif;
@@ -30,6 +30,12 @@ form {
  background-color:#FAFAFA;
  padding:10px;
  width:280px;
+ background: rgba(255,255,255,0.5);
+ /*  background-color: transparent;*/
+/*  zoom: 1;
+filter: alpha(opacity=50);
+opacity: 0.5;*/
+
  }
 fieldset {
  padding:0 20px 20px 20px;
@@ -72,14 +78,16 @@ input[type=submit], input[type=reset] {
  box-shadow:1px 1px 1px #D83F3D;
  cursor:pointer;
  }
-/*  img {
+  .back {
 	width: 100%;
-	heigth: auto;
-	backrground-repeat: no-repeat;
+	height: auto;
+	backrground-repeat: repeat;
 	position: absolute;
 	z-index: -1;
 }
-*/
+.descrip{
+	font-color: #FAFAFA;
+}
 h1 {
 	font-size: 20px;
 	color: #445668;
@@ -89,7 +97,10 @@ h1 {
 	text-shadow: 0px 1px 0px #f2f2f2;
 }
 
-
+.profile{
+	margin-left:20%;
+	
+}
 ul {
 	display: inline;
 	list-style-type: none;
@@ -97,7 +108,7 @@ ul {
 	width: 200px;
 }
 
-li a {
+li a, a {
 	display: inline;
 	font-color: #5E768D;
 	padding: 8px 16px;

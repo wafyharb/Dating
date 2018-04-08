@@ -2,61 +2,44 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Home</title>
+<link th:href=@{css/style.css} rel="stylesheet" type="text/css"
+	media="screen" />
 </head>
 <body>
-<h1 th:text="${session.email}"> Bienvenue dans la session</h1>
-<a th:href=@{/deconnexion}>Se deconnecter</a>
-<a th:href=@{/desinscription}>Se désincrire</a>
-<div>
-		<ul th:object="${session.user}">
-			<li th:text="${session.user.email}"></li>
-			<li th:text="${session.user.prenom}"></li>
-			<li th:text="${session.user.nom}"></li>
-			<li th:text="${session.user.numTel}"></li>
-			<li th:text="${session.user.dateNaissance}"></li>
-			<li th:text="${session.user.sexe}"></li>			  
-			<li th:text="${session.user.adresse.codePostale}"></li>
-			<li th:text="${session.user.adresse.numero}"></li>
-			<li th:text="${session.user.adresse.nomRue}"></li>
-			<li th:text="${session.user.adresse.complement}"></li>
-			<li th:text="${session.user.adresse.ville}"></li>				  				
-			<li th:text="${session.user.apparence.taille}"></li>
-		    <li th:text="${session.user.apparence.couleurYeux}"></li>
-		    <li th:text="${session.user.situation.statutPro}"></li>
-		    <li th:text="${session.user.situation.statutPerso}"></li>		    
-			
-		</ul>
-		<img th:src="@{ 'images/'+${session.pic.lien}} " width=100px height=100px>
-		
-		
+	<img class="back" th:src=@{/images/back.jpg}>
+	
+	<a th:href=@{/deconnexion}>Se deconnecter</a>
+	<a th:href=@{/desinscription}>Se désincrire</a>
+	<a th:href=@{/profile}>profile</a>
+	
+	
+	<div class="profile" th:each="user,iter :${users}">
+		<form th:action="@{/favori}" th:object="${user}" method="post">
+			<ul>
+				<li><strong>Utilisateur</strong> <strong
+					th:text="${iter.index}"></strong></li>
+				<li th:text="${user.email}"></li>
+				<li th:text="${user.prenom}"></li>
+				<li th:text="${user.nom}"></li>
+				<li th:text="${user.numTel}"></li>
+				<li th:text="${user.dateNaissance}"></li>
+				<li th:text="${user.sexe}"></li>
+				<li th:text="${user.adresse.ville}"></li>
+				<li th:text="${user.apparence.taille}"></li>
+				<li th:text="${user.apparence.couleurYeux}"></li>
+				<li th:each="photo:${user.photos}"><img
+					th:src="@{ '/images/users_pictures/'+${photo.lien}} " width=280px
+					height=300px></li>
+				<li><input type="submit" value="Ajouter au favoris"></li>
+			</ul>
+		</form>
+		<!--	<form th:action="@{/note}" method="post">
+		           <input type="text" placeholder="Noter cette Photo" >
+		           <input type="submit" value="Noter">
+		        </form>
+		          -->
 	</div>
-	 <h1>Listes des utilisateurs</h1>
-	 <div >
-	 
-		<ul th:each="user,iter :${users}" >
-		    <li> <strong>Utilisateur</strong> <strong th:text="${iter.index}"></strong></li>
-			<li th:text="${user.email}"></li>
-			<li th:text="${user.prenom}"></li>
-			<li th:text="${user.nom}"></li>
-			<li th:text="${user.numTel}"></li>
-			<li th:text="${user.dateNaissance}"></li>
-			<li th:text="${user.sexe}"></li>			  
-			<li th:text="${user.adresse.codePostale}"></li>
-			<li th:text="${user.adresse.numero}"></li>
-			<li th:text="${user.adresse.nomRue}"></li>
-			<li th:text="${user.adresse.complement}"></li>
-			<li th:text="${user.adresse.ville}"></li>				  				
-			<li th:text="${user.apparence.taille}"></li>
-		    <li th:text="${user.apparence.couleurYeux}"></li>
-		    <li th:each="photo:${user.photos}">
-		    <p th:text= "${photo.lien}"></p>
-		    </li>
-		 		
-		</ul>
-		
-		
-	</div>
-	 
+
 </body>
 </html>
