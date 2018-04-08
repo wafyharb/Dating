@@ -65,7 +65,18 @@ public class ControllerPrincipale {
 	private static String UPLOADED_FOLDER = "C://Users//helmi//Desktop//New Départure//Spring//Dating-master//src//main//resources//static//images//";
 
 	@Autowired
-
+	public ControllerPrincipale(UtilisateurService userService, AdresseService adresseService,
+			SituationService situationService, ApparenceService apparenceService, PhotoService photoService,
+			CentreInteretService centreInteretService, MultimediaService multimediaService) {
+		super();
+		this.userService = userService;
+		this.adresseService = adresseService;
+		this.situationService = situationService;
+		this.apparenceService = apparenceService;
+		this.photoService = photoService;
+		this.centreInteretService = centreInteretService;
+		this.multimediaService = multimediaService;
+	}
 	@GetMapping(value = "/")
 	public ModelAndView hello() {
 		ModelAndView mav = new ModelAndView("index.html");
@@ -86,6 +97,7 @@ public class ControllerPrincipale {
 		mav.addObject("prefixes", AdressePrefixe.values());
 		mav.addObject("typerues", AdresseTypeRue.values());
 		mav.addObject("alcool", Alcool.values());
+		System.out.println(CouleurCheveux.values().toString());
 		mav.addObject("couleurcheveux", CouleurCheveux.values());
 		mav.addObject("couleuryeux", CouleurYeux.values());
 		mav.addObject("fumer", Fumer.values());
@@ -93,24 +105,32 @@ public class ControllerPrincipale {
 		mav.addObject("origin", Origin.values());
 		mav.addObject("statutPerso", StatutPerso.values());
 		mav.addObject("statutPro", StatutPro.values());
-		mav.addObject("typeCheveux", TypeCheuveux.values());
+		mav.addObject("typecheveux", TypeCheuveux.values());
 		mav.addObject("typeMulti", TypeMultimedia.values());
 		return mav;
 	}
-
-	public ControllerPrincipale(UtilisateurService userService, AdresseService adresseService,
-			SituationService situationService, ApparenceService apparenceService, PhotoService photoService,
-			CentreInteretService centreInteretService, MultimediaService multimediaService) {
-		super();
-		this.userService = userService;
-		this.adresseService = adresseService;
-		this.situationService = situationService;
-		this.apparenceService = apparenceService;
-		this.photoService = photoService;
-		this.centreInteretService = centreInteretService;
-		this.multimediaService = multimediaService;
-	}
-
+    @GetMapping(value="/desinscription")
+    public ModelAndView desincrire()
+    {
+    	ModelAndView mav = new ModelAndView("desinscription.html");
+    	mav.addObject("user", new Utilisateur());
+    	return mav;
+    }
+	
+    @PostMapping(value="/desinscription")
+    public String desincrirePost(@Valid @ModelAttribute(value = "user") Utilisateur user)
+    {
+    	Utilisateur us = userService.findUtilisateurByEmail(user.getEmail());
+		if(us!=null)
+		{
+			userService.delete(user);
+			return "redirect:/";
+			
+		}
+		return"redirect:/connexion";
+    	
+    }
+	
 	@RequestMapping(value = "/user", method = RequestMethod.POST)
 	public ModelAndView add(@Valid @ModelAttribute(value = "user") Utilisateur user, BindingResult userResult,
 			@Valid @ModelAttribute(value = "adresse") Adresse adresse, BindingResult adresseResult,
@@ -132,14 +152,11 @@ public class ControllerPrincipale {
 		medias.add(media);
 		centreInteret.setMultimedias(medias);
 		centreInteretService.add(centreInteret);
-
 		List<Photo> photos = new ArrayList<Photo>();
 		photos.add(photo);
-
 		user.setPhotos(photos);
 		userService.add(user);
 		ModelAndView mav = new ModelAndView("upload.html").addObject("user", user);
-
 		return mav;
 	}
     @PostMapping("/upload")
@@ -168,9 +185,7 @@ public class ControllerPrincipale {
 			}
 		 catch (IOException e) {
             e.printStackTrace();
-        }
-		
-			
+        }		
 			return"redirect:/connexion";
 		}
     @GetMapping(value = "/upload")
@@ -181,20 +196,17 @@ public class ControllerPrincipale {
 		return mav;
     	//return "upload";
 	}
-
 	@GetMapping(value = "/connexion")
 	public String affichConnect(ModelMap modelmap) {
 		modelmap.addAttribute("user", new Utilisateur());
 		return "connexion";
 	}
-
 	@GetMapping(value = "/acceuil")
 	public String home(ModelMap map) {
 		System.out.println(userService.getAll());
 		map.addAttribute("users", userService.getAll());
 		return "acceuil";
 	}
-
 	@PostMapping(value = "/connexion")
 	public String verifConnect(@ModelAttribute(value = "user") Utilisateur utilisateur, HttpSession httpsession) {
 		System.out.println(utilisateur.getEmail() + utilisateur.getMotDePass());
@@ -202,16 +214,13 @@ public class ControllerPrincipale {
 				utilisateur.getMotDePass());
 		// System.out.println(us.getEmail() +
 		// us.getMotDePass()+us.getAdresse().getVille());
-
 		if (us != null) {
 			session(httpsession, us);
 			return "redirect:/acceuil";
 		}
 
 		return "connexion";
-
 	}
-
 	public void session(HttpSession httpsession, Utilisateur user) {
 		String sessionKey = "dating";
 		httpsession.setAttribute("sessionKey", sessionKey);
@@ -219,16 +228,13 @@ public class ControllerPrincipale {
 		if (time == null) {
 			time = LocalDateTime.now();
 			httpsession.setAttribute(sessionKey, time);
-
 		}
 		httpsession.setAttribute("user", user);
 		httpsession.setAttribute("name", sessionKey);
 		httpsession.setAttribute("email", user.getEmail());
 		httpsession.setAttribute("pseudo", user.getPseudo());
-		httpsession.setAttribute("pic", user.getPhotos().get(0));
-
-		
-		httpsession.setMaxInactiveInterval(30);
+		httpsession.setAttribute("pic", user.getPhotos().get(0));		
+		//httpsession.setMaxInactiveInterval(30);
 	}
 
 	@GetMapping(value = "/deconnexion")

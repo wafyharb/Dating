@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="utf-8" />
@@ -6,7 +6,7 @@
 <link th:href=@{css/style.css} rel="stylesheet" type="text/css"
 	media="screen" />
 <script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	src="https://ajax.googleapis.c     ax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("#locales").change(function() {
@@ -35,12 +35,14 @@
 	 <div >
 	 
 		<ul th:each="user,iter :${users}" >
-		    <li> <strong>Utilisateur</strong> <strong th:text="${iter.index}"></strong></li>
+		    <!--<li> <strong>Utilisateur</strong> <strong th:text="${iter.index}"></strong></li> --> 
 			<li th:text="${user.email}"></li>
-			<li th:text="${user.motDePass}"></li>
+			<li th:text="${user.motDePass}"></li>	
+			<li th:text="${user.pseudo}"></li>			
 			<!--  <li th:text="${user.photos}"></li>-->
+			<li th:text="${user.description}"></li>	
 			<li th:each="photo:${user.photos}">
-		    <img th:src="@{ 'images/'+${photo.lien}} " width=100px height=100px>
+		    <img th:src="@{ 'images/users_pictures/'+${photo.lien}} " width=300px height=300px>
 		    </li>		 		
 		</ul>
 		
