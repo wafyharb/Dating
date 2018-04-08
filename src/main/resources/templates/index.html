@@ -12,14 +12,14 @@
 		$("#locales").change(function() {
 			var selectedOption = $('#locales').val();
 			if (selectedOption != '') {
-				window.location.replace('locale?lang=' + selectedOption);
+				window.location.replace('?lang=' + selectedOption);
 			}
 		});
 	});
 </script>
 </head>
 <body>
-	<span class="langue" th:text="#{lang.change}"></span>:
+	<span class="langue" th:text="#{lang.change}"></span>
 	<select class="langue" id="locales">
 		<option value=""></option>
 		<option value="en" th:text="#{lang.eng}"></option>
@@ -30,7 +30,7 @@
 		<li><a th:href=@{/connexion} th:text="#{connexion}"></a></li>
 
 	</ul>
-	<img th:src=@{/images/back2.jpg}>
+	
      <h1>Listes des utilisateurs</h1>
 	 <div >
 	 
@@ -38,9 +38,12 @@
 		    <li> <strong>Utilisateur</strong> <strong th:text="${iter.index}"></strong></li>
 			<li th:text="${user.email}"></li>
 			<li th:text="${user.motDePass}"></li>
-			
-		 		
+			<!--  <li th:text="${user.photos}"></li>-->
+			<li th:each="photo:${user.photos}">
+		    <img th:src="@{ 'images/'+${photo.lien}} " width=100px height=100px>
+		    </li>		 		
 		</ul>
+		
 	</div>
 
 </body>

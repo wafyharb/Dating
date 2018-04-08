@@ -180,7 +180,7 @@ public class Utilisateur {
 	public String toString() {
 		return "Utilisateur [email=" + email + ", nom=" + nom + ", prenom=" + prenom + ", dateNaissance="
 				+ dateNaissance + ", sexe=" + sexe + ", motDePass=" + motDePass + ", pseudo=" + pseudo + ", numTel="
-				+ numTel + ", type=" + type + ", description=" + description + "]";
+				+ numTel + ", type=" + type + ", description=" + description + ", photos=" + photos.toString() + "]";
 	}
 
 	public void setCentresInterets(List<CentreInteret> centresInterets) {

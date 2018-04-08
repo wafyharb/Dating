@@ -10,6 +10,11 @@ import javax.persistence.ManyToOne;
 
 @Entity
 public class Photo {
+	@Override
+	public String toString() {
+		return "Photo [lien=" + lien + ", note=" + note + "]";
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;

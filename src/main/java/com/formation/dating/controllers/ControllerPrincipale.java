@@ -138,32 +138,48 @@ public class ControllerPrincipale {
 
 		user.setPhotos(photos);
 		userService.add(user);
-		ModelAndView mav = new ModelAndView("connexion.html").addObject("user", user);
+		ModelAndView mav = new ModelAndView("upload.html").addObject("user", user);
 
 		return mav;
 	}
     @PostMapping("/upload")
-	public String upload(@RequestParam("file")MultipartFile file, RedirectAttributes redirectAttributes) {
+	public String upload(@RequestParam("file")MultipartFile file, 
+			@Valid @ModelAttribute(value = "user") Utilisateur user, BindingResult userResult,
+			RedirectAttributes redirectAttributes) {
 		if(file.isEmpty())
 		{
 			redirectAttributes.addFlashAttribute("message","Please select an image");
 			return"error";}
 			try {
-				//Récuperer le fichier et le sauvegarder
 				byte[] bytes= file.getBytes();
 				Path path= Paths.get(UPLOADED_FOLDER+file.getOriginalFilename());
 				Files.write(path, bytes);
+				Utilisateur us = userService.findUtilisateurByEmail(user.getEmail());
+				if(us!=null)
+				{
+				Photo pic = new Photo();
+				pic.setLien(file.getOriginalFilename());
+				System.out.println(file.getOriginalFilename());
+				List<Photo> photos = new ArrayList<Photo>();
+				photoService.add(pic);
+				photos.add(pic);
+				us.setPhotos(photos);
+				userService.update(us);}
 			}
 		 catch (IOException e) {
             e.printStackTrace();
         }
+		
 			
-			return"redirect:/error";
+			return"redirect:/connexion";
 		}
     @GetMapping(value = "/upload")
-	public String upload() {
-		
-		return "upload";
+	public ModelAndView upload() {
+      ModelAndView mav = new ModelAndView("upload.html");
+    	mav.addObject("user", new Utilisateur());
+    	mav.addObject("photo",new Photo());
+		return mav;
+    	//return "upload";
 	}
 
 	@GetMapping(value = "/connexion")
@@ -209,6 +225,9 @@ public class ControllerPrincipale {
 		httpsession.setAttribute("name", sessionKey);
 		httpsession.setAttribute("email", user.getEmail());
 		httpsession.setAttribute("pseudo", user.getPseudo());
+		httpsession.setAttribute("pic", user.getPhotos().get(0));
+
+		
 		httpsession.setMaxInactiveInterval(30);
 	}
 
@@ -216,6 +235,6 @@ public class ControllerPrincipale {
 	public String logout(HttpSession httpsession) {
 		httpsession.invalidate();
 
-		return "index";
+		return "redirect:/";
 	}
 }

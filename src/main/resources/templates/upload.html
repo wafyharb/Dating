@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<head>
+<link th:href=@{css/style.css} rel="stylesheet" type="text/css"
+	media="screen" /></head>
 <body>
 
-<h1>Spring Boot file upload example</h1>
+<h1>Download Pictures</h1>
 
-<form method="POST" action="/upload" enctype="multipart/form-data">
-    <input type="file" name="file" /><br/><br/>
+<form method="POST" action=/upload enctype="multipart/form-data">
+    <input type="email" th:placeholder="#{placeHolderEmail}" th:field="*{user.email}"/> 
+    <input type="file" name="file"/><br/><br/>
     <input type="submit" value="Submit" />
 </form>
 

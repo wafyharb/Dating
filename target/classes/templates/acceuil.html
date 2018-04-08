@@ -23,9 +23,12 @@
 			<li th:text="${session.user.apparence.taille}"></li>
 		    <li th:text="${session.user.apparence.couleurYeux}"></li>
 		    <li th:text="${session.user.situation.statutPro}"></li>
-		    <li th:text="${session.user.situation.statutPerso}"></li>
+		    <li th:text="${session.user.situation.statutPerso}"></li>		    
 			
 		</ul>
+		<img th:src="@{ 'images/'+${session.pic.lien}} " width=100px height=100px>
+		
+		
 	</div>
 	 <h1>Listes des utilisateurs</h1>
 	 <div >
@@ -45,8 +48,13 @@
 			<li th:text="${user.adresse.ville}"></li>				  				
 			<li th:text="${user.apparence.taille}"></li>
 		    <li th:text="${user.apparence.couleurYeux}"></li>
+		    <li th:each="photo:${user.photos}">
+		    <p th:text= "${photo.lien}"></p>
+		    </li>
 		 		
 		</ul>
+		
+		
 	</div>
 	 
 </body>

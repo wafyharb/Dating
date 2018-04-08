@@ -72,14 +72,14 @@ input[type=submit], input[type=reset] {
  box-shadow:1px 1px 1px #D83F3D;
  cursor:pointer;
  }
-img {
+/*  img {
 	width: 100%;
 	heigth: auto;
 	backrground-repeat: no-repeat;
 	position: absolute;
 	z-index: -1;
 }
-
+*/
 h1 {
 	font-size: 20px;
 	color: #445668;
@@ -94,7 +94,6 @@ ul {
 	display: inline;
 	list-style-type: none;
 	margin: 0;
-	float: right;
 	width: 200px;
 }
 
