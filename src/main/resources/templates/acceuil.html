@@ -15,11 +15,11 @@
 	
 	
 	<div class="profile" th:each="user,iter :${users}">
-		<form th:action="@{/favori}" th:object="${user}" method="post">
+		<form th:action="@{/favori}"  method="post">
 			<ul>
 				<li><strong>Utilisateur</strong> <strong
 					th:text="${iter.index}"></strong></li>
-				<li th:text="${user.email}"></li>
+				<li th:text="${user.email}" th:field="*{favori.email}"></li>
 				<li th:text="${user.prenom}"></li>
 				<li th:text="${user.nom}"></li>
 				<li th:text="${user.numTel}"></li>

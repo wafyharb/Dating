@@ -210,6 +210,7 @@ public class ControllerPrincipale {
 	public String home(ModelMap map) {
 		System.out.println(userService.getAll());
 		map.addAttribute("users", userService.getAll());
+		map.addAttribute("favori", new Utilisateur());
 		return "acceuil";
 	}
 	@PostMapping(value = "/connexion")
