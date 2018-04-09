@@ -62,7 +62,7 @@ public class ControllerPrincipale {
 	private final PhotoService photoService;
 	private final CentreInteretService centreInteretService;
 	private final MultimediaService multimediaService;
-	private static String UPLOADED_FOLDER = "C://Users//helmi//Desktop//New Départure//Spring//Dating-master//src//main//resources//static//images//users_pictures//";
+	private static String UPLOADED_FOLDER = "C://Users//Formation.M2I-JAV5-04//Desktop//wafa//Workspace//Dating-master//src//main//resources//static//images//users_pictures//";
 
 	@Autowired
 	public ControllerPrincipale(UtilisateurService userService, AdresseService adresseService,
@@ -77,18 +77,21 @@ public class ControllerPrincipale {
 		this.centreInteretService = centreInteretService;
 		this.multimediaService = multimediaService;
 	}
+
 	@GetMapping(value = "/")
 	public ModelAndView hello() {
 		ModelAndView mav = new ModelAndView("index.html");
 		mav.addObject("users", userService.getAll());
 		return mav;
 	}
+
 	@GetMapping(value = "/profile")
 	public ModelAndView profile() {
 		ModelAndView mav = new ModelAndView("profile.html");
 		mav.addObject("users", userService.getAll());
 		return mav;
 	}
+
 	@GetMapping(value = "/user")
 	public ModelAndView inscription() {
 		ModelAndView mav = new ModelAndView("formulaire.html");
@@ -114,28 +117,26 @@ public class ControllerPrincipale {
 		mav.addObject("typeMulti", TypeMultimedia.values());
 		return mav;
 	}
-    @GetMapping(value="/desinscription")
-    public ModelAndView desincrire()
-    {
-    	ModelAndView mav = new ModelAndView("desinscription.html");
-    	mav.addObject("user", new Utilisateur());
-    	return mav;
-    }
-	
-    @PostMapping(value="/desinscription")
-    public String desincrirePost(@Valid @ModelAttribute(value = "user") Utilisateur user)
-    {
-    	Utilisateur us = userService.findUtilisateurByEmail(user.getEmail());
-		if(us!=null)
-		{
+
+	@GetMapping(value = "/desinscription")
+	public ModelAndView desincrire() {
+		ModelAndView mav = new ModelAndView("desinscription.html");
+		mav.addObject("user", new Utilisateur());
+		return mav;
+	}
+
+	@PostMapping(value = "/desinscription")
+	public String desincrirePost(@Valid @ModelAttribute(value = "user") Utilisateur user) {
+		Utilisateur us = userService.findUtilisateurByEmail(user.getEmail());
+		if (us != null) {
 			userService.delete(user);
 			return "redirect:/";
-			
+
 		}
-		return"redirect:/connexion";
-    	
-    }
-	
+		return "redirect:/connexion";
+
+	}
+
 	@RequestMapping(value = "/user", method = RequestMethod.POST)
 	public ModelAndView add(@Valid @ModelAttribute(value = "user") Utilisateur user, BindingResult userResult,
 			@Valid @ModelAttribute(value = "adresse") Adresse adresse, BindingResult adresseResult,
@@ -164,21 +165,20 @@ public class ControllerPrincipale {
 		ModelAndView mav = new ModelAndView("upload.html").addObject("user", user);
 		return mav;
 	}
-    @PostMapping("/upload")
-	public String upload(@RequestParam("file")MultipartFile file, 
-			@Valid @ModelAttribute(value = "user") Utilisateur user, BindingResult userResult,
-			RedirectAttributes redirectAttributes) {
-		if(file.isEmpty())
-		{
-			redirectAttributes.addFlashAttribute("message","Please select an image");
-			return"error";}
-			try {
-				byte[] bytes= file.getBytes();
-				Path path= Paths.get(UPLOADED_FOLDER+file.getOriginalFilename());
-				Files.write(path, bytes);
-				Utilisateur us = userService.findUtilisateurByEmail(user.getEmail());
-				if(us!=null)
-				{
+
+	@PostMapping("/upload")
+	public String upload(@RequestParam("file") MultipartFile file,
+			@Valid @ModelAttribute(value = "user") Utilisateur user, RedirectAttributes redirectAttributes) {
+		if (file.isEmpty()) {
+			redirectAttributes.addFlashAttribute("message", "Please select an image");
+			return "error";
+		}
+		try {
+			byte[] bytes = file.getBytes();
+			Path path = Paths.get(UPLOADED_FOLDER + file.getOriginalFilename());
+			Files.write(path, bytes);
+			Utilisateur us = userService.findUtilisateurByEmail(user.getEmail());
+			if (us != null) {
 				Photo pic = new Photo();
 				pic.setLien(file.getOriginalFilename());
 				System.out.println(file.getOriginalFilename());
@@ -186,31 +186,61 @@ public class ControllerPrincipale {
 				photoService.add(pic);
 				photos.add(pic);
 				us.setPhotos(photos);
-				userService.update(us);}
+				userService.update(us);
 			}
-		 catch (IOException e) {
-            e.printStackTrace();
-        }		
-			return"redirect:/connexion";
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-    @GetMapping(value = "/upload")
-	public ModelAndView upload() {
-      ModelAndView mav = new ModelAndView("upload.html");
-    	mav.addObject("user", new Utilisateur());
-    	mav.addObject("photo",new Photo());
-		return mav;
-    	//return "upload";
+		return "redirect:/connexion";
 	}
+
+	@GetMapping(value = "/upload")
+	public ModelAndView upload() {
+		ModelAndView mav = new ModelAndView("upload.html");
+		mav.addObject("user", new Utilisateur());
+		// mav.addObject("photo",new Photo());
+		return mav;
+		// return "upload";
+	}
+
 	@GetMapping(value = "/connexion")
 	public String affichConnect(ModelMap modelmap) {
 		modelmap.addAttribute("user", new Utilisateur());
 		return "connexion";
 	}
+
 	@GetMapping(value = "/acceuil")
 	public String home(ModelMap map) {
 		System.out.println(userService.getAll());
 		map.addAttribute("users", userService.getAll());
 		map.addAttribute("favori", new Utilisateur());
+		return "acceuil";
+	}
+    
+	@PostMapping(value = "/acceuil")
+	public String AjoutFavori(@Valid @ModelAttribute(value = "favori") Utilisateur favori, HttpSession session) {
+		System.out.println(favori);
+		Utilisateur fav = userService.findUtilisateurByEmail(favori.getEmail());
+		if (fav != null) {
+			Utilisateur user=(Utilisateur) session.getAttribute("user");
+			if(user!=null)
+			{
+				ArrayList<Utilisateur> favoris= (ArrayList<Utilisateur>) user.getFavoris();
+				if(favoris==null)
+				{
+					ArrayList<Utilisateur> favs= new ArrayList<Utilisateur>();
+					favs.add(fav);
+				}
+				else
+				{
+					favoris.add(fav);
+				}
+				user.setFavoris(favoris);
+				userService.update(user);
+			}
+		}
+		
+		
 		return "acceuil";
 	}
 	@PostMapping(value = "/connexion")
@@ -227,6 +257,7 @@ public class ControllerPrincipale {
 
 		return "connexion";
 	}
+    
 	public void session(HttpSession httpsession, Utilisateur user) {
 		String sessionKey = "dating";
 		httpsession.setAttribute("sessionKey", sessionKey);
@@ -239,8 +270,8 @@ public class ControllerPrincipale {
 		httpsession.setAttribute("name", sessionKey);
 		httpsession.setAttribute("email", user.getEmail());
 		httpsession.setAttribute("pseudo", user.getPseudo());
-		httpsession.setAttribute("pic", user.getPhotos().get(0));		
-		//httpsession.setMaxInactiveInterval(30);
+		httpsession.setAttribute("pic", user.getPhotos().get(0));
+		// httpsession.setMaxInactiveInterval(30);
 	}
 
 	@GetMapping(value = "/deconnexion")

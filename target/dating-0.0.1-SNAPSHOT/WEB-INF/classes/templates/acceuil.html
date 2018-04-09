@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Home</title>
+<link th:href=@{css/style.css} rel="stylesheet" type="text/css"
+	media="screen" />
+</head>
+<body>
+	<img class="back" th:src=@{/images/back.jpg}>
+	
+	<a th:href=@{/deconnexion}>Se deconnecter</a>
+	<a th:href=@{/desinscription}>Se désincrire</a>
+	<a th:href=@{/profile}>profile</a>
+	
+	
+	<div class="profile" th:each="user,iter :${users}">
+		<form th:action="@{/favori}"  method="post">
+			<ul>
+				<li><strong>Utilisateur</strong> <strong
+					th:text="${iter.index}"></strong></li>
+				<li th:text="${user.email}" th:field="*{favori.email}"></li>
+				<li th:text="${user.prenom}"></li>
+				<li th:text="${user.nom}"></li>
+				<li th:text="${user.numTel}"></li>
+				<li th:text="${user.dateNaissance}"></li>
+				<li th:text="${user.sexe}"></li>
+				<li th:text="${user.adresse.ville}"></li>
+				<li th:text="${user.apparence.taille}"></li>
+				<li th:text="${user.apparence.couleurYeux}"></li>
+				<li th:each="photo:${user.photos}"><img
+					th:src="@{ '/images/users_pictures/'+${photo.lien}} " width=280px
+					height=300px></li>
+				<li><input type="submit" value="Ajouter au favoris"></li>
+			</ul>
+		</form>
+		<!--	<form th:action="@{/note}" method="post">
+		           <input type="text" placeholder="Noter cette Photo" >
+		           <input type="submit" value="Noter">
+		        </form>
+		          -->
+	</div>
+
+</body>
+</html>

@@ -1,0 +1,49 @@
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<title>Speed Dating</title>
+<link th:href=@{css/style.css} rel="stylesheet" type="text/css"
+	media="screen" />
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#locales").change(function() {
+			var selectedOption = $('#locales').val();
+			if (selectedOption != '') {
+				window.location.replace('?lang=' + selectedOption);
+			}
+		});
+	});
+</script>
+</head>
+<body>
+<img class="back" th:src=@{/images/back.jpg}>
+	<span class="langue" th:text="#{lang.change}"></span>
+	<select class="langue" id="locales">
+		<option value=""></option>
+		<option value="en" th:text="#{lang.eng}"></option>
+		<option value="fr" th:text="#{lang.fr}"></option>
+	</select>
+	
+		<a th:href=@{/user} th:text="#{inscription}"></a>
+		<a th:href=@{/connexion} th:text="#{connexion}"></a>
+     <h1>Speed Dating M2i</h1>
+	 <div >
+	   <span class="descrip"><strong>Pour Rencontrer John Vous n'avez qu'a s'inscrire</strong> </span>
+		<ul th:each="user,iter :${users}" >
+		  
+		    <!--<li> <strong>Utilisateur</strong> <strong th:text="${iter.index}"></strong></li> --> 
+			<li th:text="${user.pseudo}"></li>			
+			<!--  <li th:text="${user.photos}"></li>-->
+			<li class="descrip" th:text="${user.description}"></li>	
+			<li th:each="photo:${user.photos}">
+		    <img th:src="@{ 'images/users_pictures/'+${photo.lien}} " width=400px height=400px>
+		    </li>		 		
+		</ul>
+		
+	</div>
+
+</body>
+</html>

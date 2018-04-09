@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Inscription</title>
+<link th:href=@{css/style.css} rel="stylesheet" type="text/css"
+	media="screen" />
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#locales").change(function() {
+			var selectedOption = $('#locales').val();
+			if (selectedOption != '') {
+				window.location.replace('user?lang=' + selectedOption);
+			}
+		});
+	});
+</script>
+</head>
+</head>
+<body>
+<body>
+	<span class="langue" th:text="#{lang.change}"></span>
+	<select class="langue" id="locales">
+		<option value=""></option>
+		<option value="en" th:text="#{lang.eng}"></option>
+		<option value="fr" th:text="#{lang.fr}"></option>
+	</select>
+  	<img class="back" th:src=@{/images/back.jpg}>
+	<div id="contact">
+		
+		<form th:action="@{/user}" method="post" enctype="multipart/form-data">
+			<fieldset>
+			<h1 th:text="#{inscription}"></h1>
+				<input type="text" th:placeholder="#{placeHolderNom}" th:field="*{user.nom}" />
+			    <input type="email" th:placeholder="#{placeHolderEmail}" th:field="*{user.email}" /> 
+			    <input type="text" th:placeholder="#{prenom}"th:field="*{user.prenom}" />
+			    <input type="password" th:placeholder="#{motDePass}" th:field="*{user.motDePass}" />
+			    <input type="date" th:placeholder="#{datedenaissance}" th:field="*{user.dateNaissance}" />			   
+			    <label for="mr"> Homme</label>
+				 <input	type="radio" id="m" th:field="*{user.sexe}" value="Homme" checked />
+				<label for="mme"> Femme</label> 
+				 <input type="radio" id="mme" th:field="*{user.sexe}" value="Femme" /><br>
+			    <input type="text" th:placeholder="#{pseudo}" th:field="*{user.pseudo}" />
+				<input type="text" id="numTel" th:placeholder="#{numTel}" th:field="*{user.numTel}" /> 
+				<textarea id="message" th:placeholder="#{placeHolderDescrip}" th:field="*{user.description}"></textarea>
+			</fieldset>			
+			<fieldset>
+			<h1 th:text="#{user.adresse}"></h1>
+				 <input type="text" th:placeholder="#{adresse.prefixe}" th:field="*{adresse.prefixe}" />
+				   <select th:field="*{adresse.typeRue}" id=type>
+				    <option value="" th:text="#{type}" selected></option>
+					<option th:each="type : ${typerues}" th:value="${type.name()}" th:text="${type}"></option>
+				   </select>
+				 <input type="text" th:field="*{adresse.numero}" th:placeholder="#{adresse.numero}"/>
+				 <input type="text" th:placeholder="#{adresse.nom}"th:field="*{adresse.nomRue}" /> 
+			     <input type="text" th:placeholder="#{adresse.comp}" th:field="*{adresse.complement}" />
+				 <input type="text" th:placeholder="#{adresse.cp}" th:field="*{adresse.codePostale}" /> 
+				 <input type="text" th:placeholder="#{adresse.ville}" th:field="*{adresse.ville}" />
+
+			</fieldset>			
+			<fieldset>
+			<h1 th:text="#{user.situation}"></h1>			
+				<div>
+				    <select th:field="*{situation.statutPerso}">
+				         <option value="" th:text="#{statutPerso}"selected></option>
+						<option th:each="type : ${statutPerso}" th:value="${type.name()}" th:text="${type}"></option>
+					</select>
+				</div>
+				<div>
+					
+					 <select th:field="*{situation.statutPro}">
+					   <option value="" th:text="#{statutPro}"selected></option>
+						<option th:each="type : ${statutPro}" th:value="${type.name()}" th:text="${type}"></option>
+					</select>
+				</div>			
+				<div>
+				    <select th:field="*{situation.fumeur}">
+					    <option value="" th:text="#{fumeur}"selected></option>
+						<option th:each="type : ${fumer}" th:value="${type.name()}" th:text="${type}"></option>
+					</select>
+				</div>				
+				<div>
+					
+					<select th:field="*{situation.orientation}">
+					<option value="" th:text="#{orientation}"selected></option>
+						<option th:each="type : ${orientation}" th:value="${type.name()}" th:text="${type}"></option>
+					</select>
+				</div>
+				<div>
+					 <select th:field="*{situation.alcool}" id=type>
+					 <option value="" th:text="#{alcool}" selected></option>
+						<option th:each="type : ${alcool}" th:value="${type.name()}" th:text="${type}"></option>
+					</select>
+				</div>
+				<input type="text" th:placeholder="#{situation.nbrEnfant}" th:field="*{situation.nbrEnfant}" />
+
+			</fieldset>
+			<fieldset>
+			 <h1 th:text="#{user.apparence}"></h1>
+		     <input type="text" th:placeholder="#{apparence.taille}" th:field="*{apparence.taille}" />
+		     <input type="text" id="masse" th:field="*{apparence.masse}"  th:placeholder="#{apparence.masse}"/> <br>
+		   	 <div>
+				
+				 <select th:field="*{apparence.couleurYeux}">
+				 <option value="" th:text="#{couleurYeux}"selected></option>
+					<option th:each="type : ${couleuryeux}" th:value="${type.name()}" th:text="${type.name()}"></option>
+				</select>
+			 </div>
+			<div>
+			
+				<select th:field="*{apparence.couleurcheveux}">
+				<option value="" th:text="#{couleurCheveux}"selected></option>
+					<option th:each="type : ${couleurcheveux}" th:value="${type.name()}" th:text="${type.name()}"></option>
+				</select>
+			</div>
+			<div>
+				
+				 <select th:field="*{apparence.typeCheveux}">
+				 <option value="" th:text="#{typeCheveux}"selected></option>
+					<option th:each="type : ${typecheveux}" th:value="${type.name()}" th:text="${type.name()}"> </option>
+				</select>
+			</div>
+			<div>
+			 
+				<select th:field="*{apparence.origine}">
+				<option value="" th:text="#{origine}"selected></option>
+					<option th:each="type : ${origin}" th:value="${type.name()}" th:text="${type}"></option>
+				</select>
+			</div>
+            </fieldset>
+			<fieldset>
+				<h1 th:text="#{user.multimedia}"></h1>
+				<div>
+				
+					<select th:field="*{multimedia.typeMultimedia}" id=type>
+					<option value="" th:text="#{typemedia}"selected></option>
+						<option th:each="type : ${typeMulti}" th:value="${type.name()}" th:text="${type}"></option>
+					</select>
+				</div>
+		        <input type="text" th:placeholder="#{genre}" th:field="*{multimedia.genre}" /> 
+		        <input type="text" th:placeholder="#{titre}" th:field="*{multimedia.titre}" /> 
+			    <input type="text" th:placeholder="#{artiste}" th:field="*{multimedia.artiste}" />
+
+			</fieldset>
+			<!--  
+            <fieldset>
+            <h1 th:text="#{user.centreInteret}"></h1>
+		    <input type="text" th:placeholder="#{sport}" th:field="*{centreInteret.sport}" />
+		    <input type="text" th:placeholder="#{loisir}" th:field="*{centreInteret.loisir}" />
+			</fieldset>
+			<fieldset>
+			<h1 th:text="#{user.photo}"></h1>
+               <label for="photo" th:text="#{photo}"></label> 
+               <input type="file" id="photo" th:field="*{photo.lien}" />
+			</fieldset>		-->	
+			<input type="submit" value="enregistrer">
+		</form>
+	</div>
+</body>
+</html>
