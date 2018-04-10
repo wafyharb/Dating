@@ -1,5 +1,6 @@
 package com.formation.dating.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -54,10 +55,10 @@ public class Utilisateur {
 	private Apparence apparence;
 
 	@OneToMany
-	private List<Photo> photos;
+	private List<Photo> photos=new ArrayList<>();
 
 	@ManyToMany
-	private List<Utilisateur> favoris;
+	private List<Utilisateur> favoris = new ArrayList<>();
 
 	public Utilisateur(String email, String nom, String prenom, String dateNaissance, String sexe, String motDePass,
 			String pseudo, String numTel) {

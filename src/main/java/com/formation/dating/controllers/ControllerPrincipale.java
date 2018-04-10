@@ -64,11 +64,15 @@ public class ControllerPrincipale {
 	private final MultimediaService multimediaService;
 	private static String UPLOADED_FOLDER = "C://Users//Formation.M2I-JAV5-04//Desktop//wafa//Workspace//Dating-master//src//main//resources//static//images//users_pictures//";
 
+//	public ControllerPrincipale() {
+//		
+//	}
+
 	@Autowired
 	public ControllerPrincipale(UtilisateurService userService, AdresseService adresseService,
 			SituationService situationService, ApparenceService apparenceService, PhotoService photoService,
 			CentreInteretService centreInteretService, MultimediaService multimediaService) {
-		super();
+		
 		this.userService = userService;
 		this.adresseService = adresseService;
 		this.situationService = situationService;
@@ -211,7 +215,7 @@ public class ControllerPrincipale {
 
 	@GetMapping(value = "/acceuil")
 	public String home(ModelMap map) {
-		System.out.println(userService.getAll());
+		//System.out.println(userService.getAll());
 		map.addAttribute("users", userService.getAll());
 		map.addAttribute("favori", new Utilisateur());
 		return "acceuil";
